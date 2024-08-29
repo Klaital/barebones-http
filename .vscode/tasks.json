@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "bazel",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "build",
+            "targets": ["//:barebones-http"]
+        },
+        {
+            "type": "bazel",
+            "group":{
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "test",
+            "options": ["--cxxopt=-std=c++14", "--test_output=all"],
+            "targets": ["//:http_test"]
+        }
+    ]
+}
