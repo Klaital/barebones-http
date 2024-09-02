@@ -9,8 +9,12 @@ cc_test(
 	srcs = [
 		"Headers.cpp",
 		"Request.cpp",
+		"Response.cpp",
+		"util.cpp",
 		"request_test.cc",
 		"headers_test.cc",
+		"response_test.cc",
+		"util_test.cc",
 	],
 	deps = [
 		"@googletest//:gtest",

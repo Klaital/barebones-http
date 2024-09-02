@@ -4,6 +4,11 @@
 
 #ifndef REQUEST_H
 #define REQUEST_H
+
+#ifndef MAX_BODY_SIZE
+#define MAX_BODY_SIZE 512
+#endif
+
 #include "Headers.h"
 
 namespace HTTP {
@@ -14,7 +19,7 @@ public:
     char path[128];
     char query_string[128];
     HeaderSet headers;
-    char body[1024];
+    char body[MAX_BODY_SIZE];
 
     Request() : method(""), path(""), query_string("") {}
 

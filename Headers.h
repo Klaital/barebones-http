@@ -15,16 +15,17 @@
 namespace HTTP {
 
 class Header {
+public:
     char key[24];
     char val[32];
 
-public:
     Header();
 
     void set(const char* key, const char* val);
     void set(const char* key, size_t val);
     void to_string(char *buf, size_t len) const;
     void reset();
+    void parse(const char* raw);
 
 };
 
@@ -38,6 +39,7 @@ public:
     void set(const char *key, const char* val);
     void set(const char *key, size_t val);
     void reset();
+    void parse(const char *raw);
     size_t length() const;
 };
 

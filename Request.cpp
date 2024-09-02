@@ -4,7 +4,6 @@
 
 #include "Request.h"
 #include <string.h>
-#include <iostream>
 
 namespace HTTP {
 

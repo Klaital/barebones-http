@@ -39,4 +39,15 @@ TEST(HeaderSetTest, Headers)
     EXPECT_STREQ("key1: val1\nkey2: val2\n", buf);
 }
 
-
+TEST(HeaderParseTest, Headers) 
+{
+    HTTP::Header h;
+    h.parse("Content-Type: application/json");
+    EXPECT_STREQ("Content-Type", h.key);
+    EXPECT_STREQ("application/json", h.val);
+    
+    h.reset();
+    h.parse(" Accept: plain/text\r\n");
+    EXPECT_STREQ("Accept", h.key);
+    EXPECT_STREQ("plain/text", h.val);
+}
