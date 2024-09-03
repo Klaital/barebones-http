@@ -52,3 +52,20 @@ TEST(UtilsTest, TrimSubstring)
     strcpy_trim(buf, "Content-Type: application/json", 13);
     EXPECT_STREQ("application/json", buf);
 }
+
+TEST(UtilsTest, ParseHttpDecl) 
+{
+    char http_buf[16];
+    char code_buf[8];
+    char status_buf[16];
+
+    parse_http_line("HTTP/1.1 500 Internal Server Error", http_buf, code_buf, status_buf);
+    EXPECT_STREQ("HTTP/1.1", http_buf);
+    EXPECT_STREQ("500", code_buf);
+    EXPECT_STREQ("Internal Server Error", status_buf);
+}
+
+TEST(UtilsTest, Strlen)
+{
+    EXPECT_EQ(30, strlen_trimmed(" Content-Type: application/json\n"));
+}

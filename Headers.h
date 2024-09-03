@@ -39,7 +39,7 @@ public:
     void set(const char *key, const char* val);
     void set(const char *key, size_t val);
     void reset();
-    void parse(const char *raw);
+    size_t parse(const char *raw);
     size_t length() const;
 };
 

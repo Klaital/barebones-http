@@ -92,3 +92,37 @@ void strcpy_trim(char *dst, const char* src, size_t head_offset, size_t max_char
     strncpy(dst, src+head, tail-head+1);
     dst[tail-head+1] = '\0';
 }
+
+size_t parse_http_line(const char* src, char* http_buf, char *code_buf, char *status_buf) {
+    // find the end of the http declaration
+    size_t http_sep = 0;
+    for (http_sep = 0; src[http_sep] != ' '; http_sep++) {}
+    if (http_buf != nullptr)
+    {
+        strcpy_trim(http_buf, src, 0, http_sep);
+    }
+    
+    // find the end of the status code
+    size_t code_sep;
+    for (code_sep = http_sep+1; src[code_sep] != ' '; code_sep++) {}
+    strcpy_trim(code_buf, src, http_sep+1, code_sep-http_sep);
+
+    // find the end of the line
+    size_t status_sep;
+    for (status_sep = code_sep+1; status_sep < strlen(src); status_sep++) 
+    {
+        if (src[status_sep] == '\n' || src[status_sep] == '\r') 
+        {
+            break;
+        }
+    }
+    strcpy_trim(status_buf, src, code_sep+1, status_sep-code_sep-1);
+    return status_sep+1;
+}
+
+size_t strlen_trimmed(const char *str)
+{
+    size_t head = find_head(str, 0);
+    size_t tail = find_tail(str, 0, strlen(str));
+    return tail-head+1;
+}

@@ -16,4 +16,6 @@ void strcpy_trim(char *dst, const char* src);
 // Find the index of the first non-trimmable character in the string
 size_t find_head(const char* src, size_t head_offset);
 size_t find_tail(const char* src, size_t head_offset, size_t max_chars);
+size_t parse_http_line(const char* src, char* http_buf, char *code_buf, char *status_buf);
+size_t strlen_trimmed(const char* str);
 #endif

@@ -18,7 +18,7 @@ TEST(HeadersTest, Headers)
     EXPECT_STREQ("Content-Length: 500", buf);
 }
 
-TEST(HeaderSetTest, Headers) 
+TEST(HeadersTest, HeaderSet) 
 {
     HTTP::HeaderSet headers;
     headers.set("Content-Type", "application/json");
@@ -39,7 +39,7 @@ TEST(HeaderSetTest, Headers)
     EXPECT_STREQ("key1: val1\nkey2: val2\n", buf);
 }
 
-TEST(HeaderParseTest, Headers) 
+TEST(HeadersTest, Parsing) 
 {
     HTTP::Header h;
     h.parse("Content-Type: application/json");
@@ -50,4 +50,14 @@ TEST(HeaderParseTest, Headers)
     h.parse(" Accept: plain/text\r\n");
     EXPECT_STREQ("Accept", h.key);
     EXPECT_STREQ("plain/text", h.val);
+}
+
+TEST(HeadersTest, ParseLen)
+{
+    HTTP::HeaderSet hs;
+    char line[] = "Content-Length: application/json \r\n";
+    size_t offset = hs.parse(line);
+    EXPECT_EQ(1, hs.length());
+    EXPECT_EQ(33, offset);
+    EXPECT_EQ('\r', line[offset]);
 }

@@ -37,26 +37,18 @@ void HTTP::Response::reset()
     this->body[0] = '\0';
 }
 
-
 void HTTP::Response::parse(char* raw) 
 {
     // line 1 has form of 'HTTP/1.1 404 Not Found'
-    char* tok = strtok(raw, " "); // throw away "HTTP/1.1"
-    tok = strtok(nullptr, " ");
-    this->code = atoi(tok);
-    tok = strtok(nullptr, "\n");
-    strcpy_trim(this->status, tok);
-    // next N lines are headers
-    tok = strtok(nullptr, "\n");
-    while (tok != nullptr && strlen(tok) > 2) 
-    {
-        this->headers.parse(tok);
+    char code_buf[8];
+    size_t offset = parse_http_line(raw, nullptr, code_buf, this->status);
+    this->code = atoi(code_buf);
+    
+    size_t total_offset = offset;
+    while(offset) {
+        offset = this->headers.parse(raw+total_offset);
+        total_offset += offset;
     }
-    // we get here once we hit an empty line
-    // any further data past here is the body
-    tok = strtok(nullptr, "\n");
-    if (tok != nullptr) 
-    {
-        strcpy_trim(this->body, raw);
-    }
+    // copy the remainder into the body
+    strcpy_trim(this->body, raw+total_offset);
 }

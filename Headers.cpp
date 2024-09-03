@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "util.h"
-#include <iostream>
 
 namespace HTTP {
 
@@ -67,12 +66,8 @@ void Header::parse(const char* raw)
         // Either way, this is an invalid header
         return;
     }
-    std::cout << "Copying header key from " << raw[0] << " through " << raw[sep_idx];
     strcpy_trim(this->key, raw, 0, sep_idx);    
-    std::cout << " => " << this->key << std::endl;
-    std::cout << "Copying header value from " << raw[sep_idx+1] << " through " << raw[strlen(raw)-1];
     strcpy_trim(this->val, raw, sep_idx+1);
-    std::cout << " => " << this->val << std::endl;
 }
 
 size_t HeaderSet::length() const 
@@ -121,12 +116,28 @@ void HeaderSet::set(const char *key, size_t val)
     this->headers[this->count].set(key, val);
     this->count++;
 }
-void HeaderSet::parse(const char* raw) 
+size_t HeaderSet::parse(const char* raw) 
 {
     if (this->count >= MAX_HEADER_COUNT) {
-        return;
+        return 0;
     }
-    this->headers[this->count].parse(raw);
-    this->count++;
+    // find the end of the line
+    size_t line_chars = 0;
+    for (line_chars=0; line_chars < strlen(raw); line_chars++) 
+    {
+        if (raw[line_chars] == '\n' || raw[line_chars] == '\r') 
+        {
+            break;
+        }
+    }
+    if (line_chars > 1)
+    {
+        this->headers[this->count].parse(raw);
+        this->count++;
+        return line_chars;
+    }
+
+    // Empty line
+    return 0;
 }
 } // HTTP
