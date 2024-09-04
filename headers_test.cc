@@ -39,6 +39,18 @@ TEST(HeadersTest, HeaderSet)
     EXPECT_STREQ("key1: val1\nkey2: val2\n", buf);
 }
 
+TEST(HeadersTest, HeaderSetUpdate) 
+{
+    HTTP::HeaderSet headers;
+    headers.set("Connection", "close");
+    headers.set("Accept", "application/json");
+    headers.set("Accept", "application/xml");
+    
+    char buf[256];
+    headers.to_string(buf, 256);
+    EXPECT_STREQ("Connection: close\nAccept: application/xml\n", buf);
+}
+
 TEST(HeadersTest, Parsing) 
 {
     HTTP::Header h;

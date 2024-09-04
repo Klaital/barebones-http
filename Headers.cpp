@@ -103,18 +103,48 @@ void HeaderSet::set(const char *key, const char *val)
     if (this->count >= MAX_HEADER_COUNT) {
         return;
     }
+    // update an existing header value if found
+    bool found = false;
+    size_t idx = 0;
+    for (idx=0; idx < this->count; idx++) 
+    {
+        if (strcmp(this->headers[idx].key, key) == 0) 
+        {
+            found = true;
+            break;
+        }
+    }
 
-    this->headers[this->count].set(key, val);
-    this->count++;
+    if (found) {
+        this->headers[idx].set(key, val);
+    } else {
+        this->headers[this->count].set(key, val);
+        this->count++;
+    }
 }
 void HeaderSet::set(const char *key, size_t val)
 {
     if (this->count >= MAX_HEADER_COUNT) {
         return;
     }
+    // update an existing header value if found
+    bool found = false;
+    size_t idx = 0;
+    for (idx=0; idx < this->count; idx++) 
+    {
+        if (strcmp(this->headers[idx].key, key) == 0) 
+        {
+            found = true;
+            break;
+        }
+    }
 
-    this->headers[this->count].set(key, val);
-    this->count++;
+    if (found) {
+        this->headers[idx].set(key, val);
+    } else {
+        this->headers[this->count].set(key, val);
+        this->count++;
+    }
 }
 size_t HeaderSet::parse(const char* raw) 
 {
