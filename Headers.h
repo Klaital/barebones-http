@@ -9,15 +9,14 @@
     #define MAX_HEADER_COUNT 10
 #endif
 
-#include <stddef.h>
-
+#include <cstddef>
 
 namespace HTTP {
 
 class Header {
 public:
-    char key[24];
-    char val[32];
+    char key[32];
+    char val[128];
 
     Header();
 
