@@ -1,3 +1,4 @@
+#ifndef ARDUINO
 #include <gtest/gtest.h>
 #include "Request.h"
 
@@ -27,3 +28,4 @@ TEST(RequestWriteTest, Request)
 	req.to_string(buf, 1024);
 	EXPECT_STREQ("PUT /lights/dimmer?state=on HTTP/1.1\nAccept: application/text\nContent-Type: plain/text\nContent-Length: 3\n\n0.5\n", buf);
 }
+#endif
