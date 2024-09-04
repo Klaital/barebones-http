@@ -1,3 +1,4 @@
+#ifndef ARDUINO
 #include <gtest/gtest.h>
 #include "./Headers.h"
 
@@ -73,3 +74,5 @@ TEST(HeadersTest, ParseLen)
     EXPECT_EQ(33, offset);
     EXPECT_EQ('\r', line[offset]);
 }
+
+#endif

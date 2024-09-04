@@ -1,3 +1,4 @@
+#ifndef ARDUINO
 #include <gtest/gtest.h>
 #include "util.h"
 
@@ -69,3 +70,4 @@ TEST(UtilsTest, Strlen)
 {
     EXPECT_EQ(30, strlen_trimmed(" Content-Type: application/json\n"));
 }
+#endif

@@ -1,3 +1,4 @@
+#ifndef ARDUINO
 #include <gtest/gtest.h>
 #include "Response.h"
 
@@ -25,3 +26,4 @@ TEST(ResponseParsing, Response)
     EXPECT_STREQ("0.5", resp.body);
     EXPECT_EQ(1, resp.headers.length());
 }
+#endif

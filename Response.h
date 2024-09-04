@@ -16,7 +16,7 @@ namespace HTTP {
 class Response {
 public:
     int code = 0;
-    char status[16];
+    char status[32];
     HeaderSet headers;
     char body[MAX_BODY_SIZE];
 
